@@ -49,11 +49,14 @@ export class ReactSortable<T extends ItemInterface> extends Component<
     this.ref = createRef<HTMLElement>();
 
     // make all state false because we can't change sortable unless a mouse gesture is made.
-    const newList = props.list.map((item) => ({
-      ...item,
-      chosen: false,
-      selected: false,
-    }));
+    const newList = [...props.list];
+
+    newList.forEach((item: T) => {
+      Object.assign(item, {
+        chosen: false,
+        selected: false,
+      });
+    })
 
     props.setList(newList, this.sortable, store);
     invariant(
@@ -113,7 +116,7 @@ Please read the updated README.md at https://github.com/SortableJS/react-sortabl
       const item = list[index];
       const { className: prevClassName } = child.props;
 
-      // @todo - handle the function if avalable. I don't think anyone will be doing this soon.
+      // @todo - handle the function if available. I don't think anyone will be doing this soon.
       const filtered = typeof filter === "string" && {
         [filter.replace(".", "")]: !!item.filtered,
       };
@@ -226,10 +229,14 @@ Please read the updated README.md at https://github.com/SortableJS/react-sortabl
     const otherList = [...store.dragging!.props.list];
     const customs = createCustoms(evt, otherList);
     removeNodes(customs);
-    const newList = handleStateAdd(customs, list, evt, clone).map((item) => ({
-      ...item,
-      selected: false,
-    }));
+
+    const newList = handleStateAdd(customs, list, evt, clone)
+
+    newList.forEach((item) => {
+      Object.assign(item, {
+        selected: false,
+      });
+    });
     setList(newList, this.sortable, store);
   }
 
@@ -280,7 +287,11 @@ Please read the updated README.md at https://github.com/SortableJS/react-sortabl
     }
 
     // remove item.selected from list
-    newList = newList.map((item) => ({ ...item, selected: false }));
+    newList.forEach((item: T) => {
+      Object.assign(item, {
+        selected: false,
+      });
+    })
     setList(newList, this.sortable, store);
   }
 
@@ -305,10 +316,9 @@ Please read the updated README.md at https://github.com/SortableJS/react-sortabl
     const { list, setList } = this.props;
     const newList = list.map((item, index) => {
       if (index === evt.oldIndex) {
-        return {
-          ...item,
+        Object.assign(item, {
           chosen: true,
-        };
+        });
       }
       return item;
     });
@@ -319,10 +329,9 @@ Please read the updated README.md at https://github.com/SortableJS/react-sortabl
     const { list, setList } = this.props;
     const newList = list.map((item, index) => {
       if (index === evt.oldIndex) {
-        return {
-          ...item,
+        Object.assign(item, {
           chosen: false,
-        };
+        });
       }
       return item;
     });
@@ -336,12 +345,17 @@ Please read the updated README.md at https://github.com/SortableJS/react-sortabl
 
   onSelect(evt: MultiDragEvent): void {
     const { list, setList } = this.props;
-    const newList = list.map((item) => ({ ...item, selected: false }));
+    const newList = [...list];
+    newList.forEach((item) => {
+      Object.assign(item, {
+        chosen: false,
+      });
+    });
     evt.newIndicies.forEach((curr) => {
       const index = curr.index;
       if (index === -1) {
         console.log(
-          `"${evt.type}" had indice of "${curr.index}", which is probably -1 and doesn't usually happen here.`
+          `"${evt.type}" had indices of "${curr.index}", which is probably -1 and doesn't usually happen here.`
         );
         console.log(evt);
         return;
@@ -353,7 +367,12 @@ Please read the updated README.md at https://github.com/SortableJS/react-sortabl
 
   onDeselect(evt: MultiDragEvent): void {
     const { list, setList } = this.props;
-    const newList = list.map((item) => ({ ...item, selected: false }));
+    const newList = [...list];
+    newList.forEach((item) => {
+      Object.assign(item, {
+        chosen: false,
+      });
+    });
     evt.newIndicies.forEach((curr) => {
       const index = curr.index;
       if (index === -1) return;

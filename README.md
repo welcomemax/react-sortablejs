@@ -10,7 +10,7 @@ Please note that this is not considered ready for production, as there are still
 
 ## Installation
 
-`sortablejs` and `@types/sortbalejs` are peer dependencies. The latter only used if intellisense/typescript is desired.
+`sortablejs` and `@types/sortablejs` are peer dependencies. The latter only used if intellisense/typescript is desired.
 
 ```shell
 npm install --save react-sortablejs sortablejs
@@ -100,7 +100,7 @@ By Default:
 - OnSpill is premounted and NOT enabled.
 - MultiDrag and Swap and NOT premounted and NOT enabled
 
-You must mount mount the plugin with sortable **ONCE ONLY**.
+You must mount the plugin with sortable **ONCE ONLY**.
 
 ```tsx
 import React from "react";
@@ -176,7 +176,7 @@ const App = () => {
 
 ### id, className, style
 
-Thes are all defaults DOM attributes. Nothing special here.
+These are all defaults DOM attributes. Nothing special here.
 
 ### list
 
