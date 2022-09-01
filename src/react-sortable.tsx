@@ -49,14 +49,12 @@ export class ReactSortable<T extends ItemInterface> extends Component<
     this.ref = createRef<HTMLElement>();
 
     // make all state false because we can't change sortable unless a mouse gesture is made.
-    const newList = [...props.list];
-
-    newList.forEach((item: T) => {
+    const newList = [...props.list].map((item) =>
       Object.assign(item, {
         chosen: false,
         selected: false,
-      });
-    })
+      })
+    );
 
     props.setList(newList, this.sortable, store);
     invariant(
@@ -69,10 +67,17 @@ Please read the updated README.md at https://github.com/SortableJS/react-sortabl
       `
     );
   }
+
   componentDidMount(): void {
     if (this.ref.current === null) return;
     const newOptions = this.makeOptions();
     Sortable.create(this.ref.current, newOptions);
+  }
+
+  componentDidUpdate(prevProps: ReactSortableProps<T>): void {
+    if (prevProps.disabled !== this.props.disabled && this.sortable) {
+      this.sortable.option("disabled", this.props.disabled)
+    }
   }
 
   render(): JSX.Element {
@@ -113,7 +118,9 @@ Please read the updated README.md at https://github.com/SortableJS/react-sortabl
     const dataid = dataIdAttr || "data-id";
     /* eslint-disable-next-line */
     return Children.map(children as ReactElement<any>[], (child, index) => {
-      const item = list[index];
+      if (child === undefined) return undefined;
+
+      const item = list[index] || {};
       const { className: prevClassName } = child.props;
 
       // @todo - handle the function if available. I don't think anyone will be doing this soon.
@@ -230,13 +237,12 @@ Please read the updated README.md at https://github.com/SortableJS/react-sortabl
     const customs = createCustoms(evt, otherList);
     removeNodes(customs);
 
-    const newList = handleStateAdd(customs, list, evt, clone)
-
-    newList.forEach((item) => {
+    const newList = handleStateAdd(customs, list, evt, clone).map((item) =>
       Object.assign(item, {
         selected: false,
-      });
-    });
+      })
+    );
+
     setList(newList, this.sortable, store);
   }
 
@@ -287,11 +293,12 @@ Please read the updated README.md at https://github.com/SortableJS/react-sortabl
     }
 
     // remove item.selected from list
-    newList.forEach((item: T) => {
+    newList = newList.map((item: T) =>
       Object.assign(item, {
         selected: false,
-      });
-    })
+      })
+    );
+
     setList(newList, this.sortable, store);
   }
 
@@ -315,25 +322,27 @@ Please read the updated README.md at https://github.com/SortableJS/react-sortabl
   onChoose(evt: SortableEvent): void {
     const { list, setList } = this.props;
     const newList = list.map((item, index) => {
+      let newItem = item;
       if (index === evt.oldIndex) {
-        Object.assign(item, {
+        newItem = Object.assign(item, {
           chosen: true,
         });
       }
-      return item;
-    });
+      return newItem;
+    })
     setList(newList, this.sortable, store);
   }
 
   onUnchoose(evt: SortableEvent): void {
     const { list, setList } = this.props;
     const newList = list.map((item, index) => {
+      let newItem = item;
       if (index === evt.oldIndex) {
-        Object.assign(item, {
+        newItem = Object.assign(newItem, {
           chosen: false,
         });
       }
-      return item;
+      return newItem;
     });
     setList(newList, this.sortable, store);
   }
@@ -345,12 +354,12 @@ Please read the updated README.md at https://github.com/SortableJS/react-sortabl
 
   onSelect(evt: MultiDragEvent): void {
     const { list, setList } = this.props;
-    const newList = [...list];
-    newList.forEach((item) => {
+    const newList = list.map((item) =>
       Object.assign(item, {
-        chosen: false,
-      });
-    });
+        selected: false,
+      })
+    );
+
     evt.newIndicies.forEach((curr) => {
       const index = curr.index;
       if (index === -1) {
@@ -367,12 +376,11 @@ Please read the updated README.md at https://github.com/SortableJS/react-sortabl
 
   onDeselect(evt: MultiDragEvent): void {
     const { list, setList } = this.props;
-    const newList = [...list];
-    newList.forEach((item) => {
+    const newList = list.map((item) =>
       Object.assign(item, {
-        chosen: false,
-      });
-    });
+        selected: false,
+      })
+    );
     evt.newIndicies.forEach((curr) => {
       const index = curr.index;
       if (index === -1) return;
