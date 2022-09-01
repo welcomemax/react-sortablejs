@@ -5,7 +5,7 @@
     "email": "waynevanson@gmail.com"
   },
   "license": "MIT",
-  "version": "6.0.0",
+  "version": "6.2.0",
   "private": false,
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -70,18 +70,20 @@
   },
   "peerDependencies": {
     "@types/sortablejs": "^1.10.0",
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0",
-    "sortablejs": "^1.10.0"
+    "react": ">=16.9.0",
+    "react-dom": ">=16.9.0"
   },
   "dependencies": {
     "classnames": "^2.2.6",
+    "sortablejs": "^1.10.0",
     "tiny-invariant": "^1.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.11.6",
     "@commitlint/cli": "^11.0.0",
     "@commitlint/config-conventional": "^11.0.0",
+    "@parcel/packager-ts": "^2.7.0",
+    "@parcel/transformer-typescript-types": "^2.7.0",
     "@semantic-release/changelog": "^5.0.1",
     "@semantic-release/git": "^9.0.0",
     "@storybook/addon-actions": "^6.0.22",
@@ -104,16 +106,16 @@
     "husky": "^4.3.0",
     "jest": "^26.4.2",
     "npm-run-all": "^4.1.5",
-    "parcel": "^2.0.0-beta.1",
+    "parcel": "^2.7.0",
     "prettier": "^2.1.2",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-is": "^16.13.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-is": "^18.2.0",
     "semantic-release": "^17.1.2",
     "sortablejs": "^1.10.0",
     "storybook": "^6.0.22",
     "ts-jest": "^26.4.0",
     "ts-node": "^9.0.0",
-    "typescript": "^4.0.3"
+    "typescript": "~4.7"
   }
 }
