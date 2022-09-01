@@ -21,8 +21,9 @@
     "serve:parcel": "parcel watch ./src/index.ts",
     "format": "npm-run-all format:*",
     "format:eslint": "yarn lint --fix",
-    "format:prettier": "prettier --write \"src/**.{js,ts}\"",
-    "lint": "eslint \"src/**.{js,ts}\""
+    "format:prettier": "prettier --write \"src/**.{ts,tsx}\"",
+    "lint": "eslint \"src/**.{ts,tsx}\"",
+    "phoenix": "rm -rf ./node_modules && rm -f yarn.lock && yarn install --prefer-online"
   },
   "peerDependencies": {
     "@types/sortablejs": "^1.10.0",
