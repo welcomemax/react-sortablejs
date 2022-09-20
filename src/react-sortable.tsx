@@ -30,14 +30,15 @@ import {
   removeNodes,
 } from "./util";
 
-/** Holds a global reference for which react element is being dragged */
+/** Holds a global reference for which React element is being dragged */
 // @todo - use context to manage this. How does one use 2 different providers?
 const store: Store = { dragging: null };
 
 export class ReactSortable<T extends ItemInterface> extends Component<
   ReactSortableProps<T>
 > {
-  defaultProps: Partial<ReactSortableProps<any>> = {
+  /* eslint-disable-next-line */
+  static defaultProps: Partial<ReactSortableProps<any>> = {
     clone: (item) => item,
   };
 
@@ -104,7 +105,7 @@ Please read the updated README.md at https://github.com/SortableJS/react-sortabl
       chosenClass = "sortable-chosen",
       /* eslint-disable */
       dragClass = "sortable-drag",
-      fallbackClass = "sortable-falback",
+      fallbackClass = "sortable-fallback",
       ghostClass = "sortable-ghost",
       swapClass = "sortable-swap-highlight",
       /* eslint-enable */
@@ -122,7 +123,7 @@ Please read the updated README.md at https://github.com/SortableJS/react-sortabl
       const item = list[index] || {};
       const { className: prevClassName } = child.props;
 
-      // @todo - handle the function if avalable. I don't think anyone will be doing this soon.
+      // @todo - handle the function if available. I don't think anyone will be doing this soon.
       const filtered = typeof filter === "string" && {
         [filter.replace(".", "")]: !!item.filtered,
       };
@@ -363,7 +364,7 @@ Please read the updated README.md at https://github.com/SortableJS/react-sortabl
       const index = curr.index;
       if (index === -1) {
         console.log(
-          `"${evt.type}" had indice of "${curr.index}", which is probably -1 and doesn't usually happen here.`
+          `"${evt.type}" had indices of "${curr.index}", which is probably -1 and doesn't usually happen here.`
         );
         console.log(evt);
         return;
@@ -390,7 +391,7 @@ Please read the updated README.md at https://github.com/SortableJS/react-sortabl
 }
 
 // everything below this point can be removed
-// once @types has been merged. PR submited
+// once @types has been merged. PR submitted
 interface MultiIndices {
   multiDragElement: HTMLElement;
   index: number;
